@@ -1,0 +1,172 @@
+File View nằm trong thư mục app/ resources / views (CÓ CHỮ S), ta nhìn thấy file view sẽ có tên là xxxx.blade.php 
+tên file view bắt buộc là xxxx.blade.php
+view sẽ có thư mục gốc là app/ réources / views 
+muốn gọi welcome  thì viết như hình dưới
+
+class HomeController extends Controller
+public function index(){
+return view ('welcome') (VIEW NÀY KHÔNG CÓ CHỮ S, trong thư mục views có chứa file welcome.blade.php)
+}
+
+nếu có thêm thư mục trong ruột của app/ réources / views (
+ thì viết return view('Home.welcome') (dấu . thay cho /)
+
+convention: nếu có HomeController thì ta phải tạo thư mục Home nằm trong views/
+
+b1:mở laragon lên
+b2:
+tạo index.blade.php trong views/Home, gõ đại thẻ h1 nào cũng được
+b3:
+copy toàn bộ css, img, js, lib và scss của dự án mẫu nhét vào thư mục public của project hiện tại
+b4:
+trong HomeController gõ 
+class HomeController extends Controller
+public function index(){
+return view('Home.index')
+}
+b5:
+trong web.php 
+<?php
+use Illuminate\Support\Facades\Route;
+//import homecontroller, cho du app ko viet hoa nhung minh phai viet hoa
+use App\Http\Controllers\HomeController;
+Route::get('/', [HomeController::class,'index']);
+?>
+b6:
+đứng ở trong project hiện tại (myDemoProject/) gõ php artisan serve (để khởi chạy)
+
+b7: gõ 
+@extends('layouts/main')
+@section('content')
+<h1> ĐÂY LÀ CAROUSEL</h1>
+@endsection
+
+ vào file index.blade.php
+b8: app/ réources / views tạo thư mục Layouts, trong ruột Layouts, tạo main.blade.php (đây lsex là phần khung của spa: gồm navbar và footer))
+b9: trong layouts/main.blade.php, ta copy phần navbar, footer, các thư viện (bootstap, js link) từ index.html (fruit project) vào main.blade.php 
+b10: ở trong file layouts/main.blade.php, ta gõ @yield('content') //đây sẽ là chỗ để đặt các component như CART, CAROUSEL...)
+
+LUỒNG THỰC THI NHƯ SAU: 
+REQUEST TỚI /
+controller nhận và return app/resouces/views/Home/index.blade.php
+trong file index.blade.php thấy có extends('layouts/main') có nghĩa là muốn dùng khung tranh main.blade.php, section('content') có nghĩa là đây sẽ là viên đá cần đính vào
+trong file main.blade.php, có @yield('content'), tức là  vị trí trên khung tranh mà ta sẽ đính đá vào
+nhớ: section là linh kiện gắn vào tranh 
+include là thành phần tạo nên khung tranh
+yield là vị trí để  để gắn linh kiện vào
+
+-------------TẠO CONTROLLER MỚI
+php artisan make:controller <Tên controller>
+sau đó tuân theo nguyên tắc, có bao nhiêu controller thì có bấy nhiêu thư mục tương ứng trong app / resources / views / <Thư mục trùng tên với tên controller
+-------------
+
+b11: vào file index.html trong fruit project, copy từ hero start tới testimoilal thay thế cho <h1> trong index.blade.php
+b12: trong views tạo thư mục Partials , trong đó lại tạo footer.blade.php và header.blade.php (partials là chỗ lưu thành phần tạo nên khung tranh)
+
+b13: vào file header.blade.php , cắt phần navbar của index.html (fruit project) vào (spinner start đến modal search end)
+vào file foooter.blade.php, cắt phần footer start đến copyright end của index.html (fruit project) vào
+VẬY LÀ TA ĐÃ XONG BƯỚC TẠO THÀNH KHUNG TRANH
+
+b14: vào lại file main.blade.php, chỉnh lại tag body sẽ trông như sau
+@include('partials.header')
+@yield('content')
+@include('partials.footer')
+VẬY LÀ TA XONG BƯỚC ĐÁNH DẤU VỊ TRÍ NÀO TRÊN BỨC TRANH ĐƯỢC PHÉP GẮN ĐÁ
+include là cho phần khung tranh (không đổi)
+partials chỗ lưu thành phần của khung tranh
+yiels là cho phần đá đính vào khung tranh
+
+-----
+b15: vào file web.php gõ thêm Route::get('/lien-he',[HomeController::class,'contact']);
+b16: vào file HomeController gõ thêm 
+public function contact(){
+return view('home.contact');
+}
+b17: vào app/resouces/views/Home tạo thêm file contact.blade.php gõ thêm
+@extends('layouts/main')
+@section('content')
+////////Ta vào fruit project, mở file contact.html, copy từ phần single page header start đến contact end vào đây
+@endsection
+b18:  vào file header.blade.php, sửa lại các anchor trên navbar có dùng contact.html thành /lien-he
+  <a href="/lien-he" class="nav-item nav-link">Contact</a> 
+
+b19: mở trình duyệt, gõ thêm /lien-he vào
+
+BÀI TẬP: thay thế các trang shop, shop detail, cart, checkout, testimonial, 404 từ fruit project vào dự án như nãy giờ đã làm (B15-B19)
+web.php --> homeController -> app/resouces/views tạo file blade.php tương ứng
+cuối cùng là sửa lại link của navbar
+
+---------------------------BUỔI 3: 
+tạo controller mới tên ProductController bằng lệnh php artisan make:controller ProductConrtoller
+trong ProductController tạo index() return view('Product.index')
+trong views tạo thưu mục mới tên Product, tạo file index.blade.php vào trong đó
+trong file index.blade.php đó gõ 
+@extends('Layouts.main')
+@section('content')
+copy từ phần single page header start đến fruit shop end 
+làm tương tự cho tất cả các trang shop detail, cart,
+chỉnh lại router trong web.php
+sửa lại đường dẫn tất cả các thư mục nhớ thêm / vào trước đường link
+thưc mục public chính là thư mục gốc
+
+---
+router sẽ đọc từ trên xuống, dính ai thì chạy người đó trước (thứ tự rất quan trọng trong router)
+
+tạo biến trong router
+Route::get('/{id}',[ProductController::class,'index']);
+như vậy thì mỗi khi www.example.com/dtdd
+thì biến id = 'dtdd'
+Route::get('/{id?}',[ProductController::class,'index']);
+cho phép người dùng không nhập id vẫn được dẫn vào index
+Route::get('/{cat}/{id}',[ProductController::class,'detail']);
+cho phép nhập nhiều biến
+người dùng nhập www.example.com/iphone.html thì 
+Route::get('/{cat}/{id}.html',[ProductController::class,'detail']); sẽ bắt được link này
+thực ra cái kiểu ghi này để đánh lừa hacker, để ngưuofi ta không mò ra máy chủ của mình xài framework nào (thực ra ko có file html nào ở đây lcar)
+
+cách lấy biến về sử dụng
+trong file web.php ta có link
+Route::get('/{cat}/{id}',[ProductController::class,'detail']);
+thì trong file controller bất kỳ, ta nhét $cat và $id vào dùng bình thường
+ta có thể dùng public catfunction index(string $cat = 'day la gia tri mac dinh cho $'){
+
+}
+
+
+quy tắc: đường dẫn tĩnh (không có biến) đặt ở trên
+đường dẫn động (có biến) đặt ở dưới
+
+trong file web.php ta có các link
+Route::get('/{id}',[ProductController::class,'index']);
+Route::get('/{cat}/{id}',[ProductController::class,'detail']);
+
+
+hàm dd('day la noi dung se in ra man hinh') để in thẳng ra màn hình
+
+
+b2: trong file web.php ta tạo thêm link
+Route::post('/login,[HomeController::class,'login']);
+b5: vào homecontroller thêm vào function login return view('home.login')
+b6: vào resources/views/home tạo thêm login.blade.php tải dang-nhap.html của thầy về nhét code của nó vào file login.blade.php, trước </form> thì phải thêm @csrf
+
+cách dùng dữ liệu được gửi bằng post
+trong controller bất kỳ, mình nhét Request $tenTuDatChoRequest
+use Illuminate\Http\Request
+public function dang-nhap(Request $tenTuDatChoRequest){
+	if($tenTuDatChoRequest)->isMethod('POST')){
+		dd($tenTuDatChoRequest->input('username'); ////đây là cách lấy dữ liệu từ post
+		$a = ' day la noi dung bien a';
+		return view('Home.login',['notice' => 'dang nhap khong thanh cong', 'bien a' => $a] ////đây là cách gửi dữ liệu từ controller đến view
+	}
+}
+
+for
+
+
+
+
+
+
+
+
+
