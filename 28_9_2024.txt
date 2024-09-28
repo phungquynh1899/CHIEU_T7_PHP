@@ -1,3 +1,4 @@
+b1: học viết sql trong laravel
 <?php
 
 namespace App\Http\Controllers;
@@ -52,39 +53,16 @@ class HomeController extends Controller
             //                                      n là stt của trang
             //phân trang cách 2 bằng paginate(10) và đường link http://127.0.0.1:8000/?page=2
             // $menu = Menu::where([['idCha', NULL],['anhien',1]])->orderBy('thutu','desc')->paginate(10)->get();
-
-        // $menu = Menu::all(); //đây chính là hàm XXX cần cho code của mình, code theo thầy thì ko cần
-
-        // return view('home.index', ['menu' => $menu]); 
+            
         return view('home.index');
     }
 
-    public function contact(){
-        return view('home.contact');
-    }
-
-    public function shop(){
-        return view('home.shop');
-    }
-
-
-    public function checkout(){
-        return view('home.checkout');
-    }
-
-    public function testimonial(){
-        return view('home.testimonial');
-    }
-    public function error(){
-        return view('home.error');
-    }
-    public function login(Request $req){
-        $a = '<div>hello</div>';
-        if($req->isMethod('POST')){
-            return view('home.login', $a);
-        }
-        return view('home.login');
-    }
+2. vào header.blade.php tìm  <div class="navbar-nav mx-auto"> xóa code và 
+ <?php
+                        use App\Share\Menu;
+                        echo Menu::getMenu();
+                 
+                        ?>
 
 
-}
+3. app/Share/ Menu.php tạo nội dung như trong file
