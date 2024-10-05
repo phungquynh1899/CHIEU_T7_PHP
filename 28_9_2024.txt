@@ -66,3 +66,5 @@ class HomeController extends Controller
 
 
 3. app/Share/ Menu.php tạo nội dung như trong file
+
+chưa fix lỗi 127.0.0.1/contact chỉ có contact là không hiện ra

@@ -1,0 +1,13 @@
+//B1. Tạo file comporser trong thư mục  App\View\Composers
+//B2. Đăng ký comporser trong function boot cua file App\Providers\AppServiceProvider.php
+//B3 vao file header.blade de su dung
+// <div class="navbar-nav mx-auto">
+                    <a href="/" class="nav-item nav-link active">Trang chủ</a>
+                    {!!$navbar!!}
+                </div>
+Note: file CustomNavbar trả về 1 biến chứa toàn bộ navbar
+
+//thầy cho file db mới, import vào
+//thầy cho img mới, đưa vào public > img / sanpham
+
+tạo file Category và Product trong App\Models

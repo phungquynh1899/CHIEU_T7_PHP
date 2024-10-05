@@ -59,14 +59,17 @@ class HomeController extends Controller
         return view('home.index');
     }
 
-    public function contact(){
-        return view('home.contact');
+    public function xxx(){
+        return view('home.xxx');
     }
 
     public function shop(){
         return view('home.shop');
     }
 
+    public function contact(){
+        return view('home.contact');
+    }
 
     public function checkout(){
         return view('home.checkout');

@@ -28,46 +28,9 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <?php
-                        use App\Share\Menu;
-                        echo Menu::getMenu();
-                 
-                        ?>
-                        
-<!-- đây là code của mình cần hàm xxx -->
-    <!-- @isset($menu) 
-        @foreach($menu as $i)
-            @if($i->idCha == null)
-                @php
-                    $hasChild = false; 
-                @endphp
-
-                @foreach($menu as $x)
-                    @if($x->idCha == $i->id)
-                        @php
-                            $hasChild = true;
-                            break; 
-                        @endphp
-                    @endif
-                @endforeach
-
-                @if($hasChild)
-                    <div class="nav-item dropdown">
-                        <a href="/{{$i->slug}}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">{!! $i->ten !!}</a>
-                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            @foreach($menu as $x)
-                                @if($x->idCha == $i->id)
-                                    <a href="/{{$x->slug}}" class="dropdown-item">{!! $x->ten !!}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @else
-                    <a href="/{{$i->slug}}" class="nav-item nav-link">{!! $i->ten !!}</a>
-                @endif
-            @endif
-        @endforeach
-    @endisset -->
+                    <!-- sử dụng file dùng chung  -->
+                    {!! $navbar !!}
+    
 </div>
 
 
